@@ -1,0 +1,32 @@
+{
+    "title": "Docker Hub Image Tracker Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "repository": {
+            "title": "Repository",
+            "type": "string",
+            "editor": "textfield",
+            "description": "Docker Hub repository to check, e.g. \"postgres\" or \"node\" for an official image, or \"bitnami/postgresql\" for a namespaced one. If no namespace is given, \"library/\" (official images) is assumed."
+        },
+        "daysBack": {
+            "title": "Days back",
+            "type": "integer",
+            "editor": "number",
+            "description": "Only return tags whose last_updated timestamp falls within this many days.",
+            "default": 7,
+            "minimum": 1,
+            "maximum": 365
+        },
+        "maxResults": {
+            "title": "Max results",
+            "type": "integer",
+            "editor": "number",
+            "description": "Maximum number of tags to return.",
+            "default": 50,
+            "minimum": 1,
+            "maximum": 100
+        }
+    },
+    "required": ["repository"]
+}
