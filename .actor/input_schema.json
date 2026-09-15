@@ -7,7 +7,9 @@
             "title": "Repository",
             "type": "string",
             "editor": "textfield",
-            "description": "Docker Hub repository to check, e.g. \"postgres\" or \"node\" for an official image, or \"bitnami/postgresql\" for a namespaced one. If no namespace is given, \"library/\" (official images) is assumed."
+            "description": "Docker Hub repository to check, e.g. \"postgres\" or \"node\" for an official image, or \"bitnami/postgresql\" for a namespaced one. If no namespace is given, \"library/\" (official images) is assumed.",
+            "prefill": "node",
+            "default": "node"
         },
         "daysBack": {
             "title": "Days back",

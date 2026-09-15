@@ -1,5 +1,41 @@
 const BASE_URL = 'https://hub.docker.com/v2/repositories';
 
+const TRANSIENT_STATUSES = new Set([429, 500, 502, 503, 504]);
+const MAX_ATTEMPTS = 4;
+const REQUEST_TIMEOUT_MS = 15_000;
+
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchWithRetry(url) {
+    let lastError;
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+        let res;
+        try {
+            res = await fetch(url, { headers: { Connection: 'close' }, signal: controller.signal });
+        } catch (err) {
+            lastError = err.name === 'AbortError' ? new Error(`Request timed out after ${REQUEST_TIMEOUT_MS}ms: ${url}`) : err;
+            if (attempt < MAX_ATTEMPTS) {
+                await sleep(1000 * 2 ** (attempt - 1));
+                continue;
+            }
+            throw lastError;
+        } finally {
+            clearTimeout(timeoutId);
+        }
+        if (res.status === 404 || res.ok) return res;
+        if (!TRANSIENT_STATUSES.has(res.status)) {
+            throw new Error(`Docker Hub API request failed: ${res.status} ${res.statusText}`);
+        }
+        lastError = new Error(`Docker Hub API request failed: ${res.status} ${res.statusText}`);
+        if (attempt < MAX_ATTEMPTS) await sleep(1000 * 2 ** (attempt - 1));
+    }
+    throw lastError;
+}
+
 function normalizeRepository(repository) {
     return repository.includes('/') ? repository : `library/${repository}`;
 }
@@ -14,12 +50,9 @@ export async function fetchImageTags({ repository, daysBack, maxResults }) {
     url.searchParams.set('ordering', 'last_updated');
     url.searchParams.set('page_size', String(Math.min(maxResults, 100)));
 
-    const res = await fetch(url, { headers: { Connection: 'close' } });
+    const res = await fetchWithRetry(url);
     if (res.status === 404) {
         throw new Error(`Repository "${repoPath}" was not found on Docker Hub.`);
-    }
-    if (!res.ok) {
-        throw new Error(`Docker Hub API request failed: ${res.status} ${res.statusText}`);
     }
     const body = await res.json();
 
