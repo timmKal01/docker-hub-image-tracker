@@ -1,7 +1,7 @@
 {
     "actorSpecification": 1,
     "name": "docker-hub-image-tracker",
-    "title": "Docker Hub Image Tracker",
+    "title": "Docker Hub Tag Tracker: New Image Versions",
     "description": "Get new or recently updated tags for any public Docker Hub image repository straight from the official Docker Hub API: tag name, digest, architectures, size, and push/pull timestamps. For DevOps teams tracking base-image or dependency updates.",
     "version": "0.1",
     "meta": {
