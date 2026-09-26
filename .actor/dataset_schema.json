@@ -1,0 +1,73 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": [
+                    "repository",
+                    "tag",
+                    "fullSizeBytes",
+                    "contentType",
+                    "tagStatus",
+                    "lastUpdated",
+                    "lastPushed",
+                    "lastPulled",
+                    "lastUpdaterUsername",
+                    "architectures",
+                    "dockerHubUrl"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "repository": {
+                        "label": "Repository",
+                        "format": "text"
+                    },
+                    "tag": {
+                        "label": "Tag",
+                        "format": "text"
+                    },
+                    "fullSizeBytes": {
+                        "label": "Full size bytes",
+                        "format": "number"
+                    },
+                    "contentType": {
+                        "label": "Content type",
+                        "format": "text"
+                    },
+                    "tagStatus": {
+                        "label": "Tag status",
+                        "format": "text"
+                    },
+                    "lastUpdated": {
+                        "label": "Last updated",
+                        "format": "date"
+                    },
+                    "lastPushed": {
+                        "label": "Last pushed",
+                        "format": "date"
+                    },
+                    "lastPulled": {
+                        "label": "Last pulled",
+                        "format": "date"
+                    },
+                    "lastUpdaterUsername": {
+                        "label": "Last updater username",
+                        "format": "text"
+                    },
+                    "architectures": {
+                        "label": "Architectures",
+                        "format": "array"
+                    },
+                    "dockerHubUrl": {
+                        "label": "Docker hub URL",
+                        "format": "link"
+                    }
+                }
+            }
+        }
+    }
+}
