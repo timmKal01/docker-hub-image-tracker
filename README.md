@@ -61,5 +61,5 @@ one charge whether the search returns 0 tags or 100.
 
 ## Related products
 
-- [npm Package Tracker](https://github.com/timmKal01/npm-package-tracker) — release/deprecation events for npm packages
-- [PyPI Download Stats Tracker](https://github.com/timmKal01/pypi-download-stats-tracker) — download-trend counterpart for PyPI packages
+- [npm Package Update Tracker](https://apify.com/m_ctim/npm-package-tracker): release/deprecation events for npm packages
+- [PyPI Download Stats](https://apify.com/m_ctim/pypi-download-stats-tracker): download-trend counterpart for PyPI packages
